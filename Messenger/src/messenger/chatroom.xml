@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="chatroomMapper">
+
+	<select id="selectAll" resultType="ChatRoom">
+		select * from chatroom
+	</select>
+
+	<select id="selectChatRoom" resultType="ChatRoom">
+		select * from chatroom
+		where roomNum = #{roomNum}
+	</select>
+	
+	<select id="selectParticipantCount" resultType="ChatRoom">
+		select participantCount from chatroom
+		where roomMasterId = #{roomMasterId}
+	</select>
+
+	<delete id="deleteChatRoom" parameterType="int">
+		delete from ChatRoom
+		where roomMasterId = #{roomMasterId}
+	</delete>
+
+	<insert id="insertChatRoom" parameterType="ChatRoom">
+		insert into	chatroom(roomNum, roomMasterId, roomTitle, participantCount, serverIP, serverLocalPort)
+		values(#{roomNum}, #{roomMasterId}, #{roomTitle}, 1, #{serverIP}, #{serverLocalPort})
+	</insert>
+	
+	<update id="addParticipantCount" parameterType="ChatRoom">
+		update chatroom set
+		participantCount = participantCount+1
+		where roomMasterId = #{roomMasterId}
+	</update>
+	
+	<update id="reduceParticipantCount" parameterType="ChatRoom">
+		update chatroom set
+		participantCount = participantCount-1
+		where roomMasterId = #{roomMasterId}
+	</update>
+
+</mapper>
